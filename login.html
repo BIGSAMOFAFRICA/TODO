@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>USER LOGIN</h2>
+        <form id="login-form">
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="login-email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="login-password" placeholder="Password" required>
+            </div>
+            <button type="submit">LOGIN</button>
+        </form>
+        <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+        <p><a href="#" id="forgot-password">Forgot Password?</a></p>
+    </div>
+
+    <script type="module">
+        import { auth, signInWithEmailAndPassword, sendPasswordResetEmail } from './firebaseConfig.js';
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                window.location.href = 'index.html'; // Redirect to dashboard
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        document.getElementById('forgot-password').addEventListener('click', () => {
+            const email = prompt("Enter your email for password reset:");
+            if (email) {
+                sendPasswordResetEmail(auth, email)
+                    .then(() => alert("Password reset email sent!"))
+                    .catch(error => alert(error.message));
+            }
+        });
+    </script>
+</body>
+</html>

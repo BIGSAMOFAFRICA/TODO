@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col justify-between">
+
+    <!-- Header Section -->
+    <div class="p-6">
+        <h1 id="welcome-message" class="text-2xl font-semibold text-gray-800 mb-4">Welcome, User</h1>
+        <button id="logout" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full font-medium transition duration-300">Logout</button>
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="container mx-auto p-8 flex-grow">
+        <h1 class="text-4xl font-bold text-purple-800 text-center mb-8">To Do List</h1>
+
+        <div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
+            <h2 class="text-2xl font-semibold text-purple-700 mb-4">Create Task</h2>
+            <input id="task-title" type="text" placeholder="Title" class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none">
+            <input id="task-date" type="datetime-local" class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none">
+            <div class="flex justify-between space-x-4">
+                <button onclick="createTask()" class="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800">Create</button>
+                <button onclick="cancelTask()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+            </div>
+        </div>
+
+        <div class="mt-8 flex justify-between items-center">
+            <h2 class="text-2xl font-semibold text-purple-700">Upcoming Tasks</h2>
+            <a href="completed.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                View Completed Tasks
+            </a>
+        </div>
+
+        <div id="task-list" class="space-y-4 mt-4">
+            <!-- Tasks will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-white py-4 text-center shadow-inner mt-8">
+        <p class="text-gray-600">&copy; <span id="year"></span> Olabisi Samuel. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript Section -->
+    <script src="script.js"></script>
+    
+    <script type="module">
+        import { auth, onAuthStateChanged, signOut } from './firebaseConfig.js';
+
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                const username = localStorage.getItem('username');
+                document.getElementById('welcome-message').textContent = `Welcome, ${username}`;
+            } else {
+                window.location.href = 'login.html'; // Redirect to login if not authenticated
+            }
+        });
+
+        document.getElementById('logout').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                localStorage.removeItem('username');
+                window.location.href = 'login.html'; // Redirect to login page
+            });
+        });
+
+        // Set the current year in the copyright footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
