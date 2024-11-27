@@ -7,11 +7,13 @@ body {
     margin: 0;
     font-family: 'Arial', sans-serif;
 }
-
+span{
+    color: tomato;
+}
 .login-container {
     background-color: #0E3947;
     padding: 20px 40px;
-    border-radius: 8px;
+    border-radius: 25px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     width: 320px;
     text-align: center;

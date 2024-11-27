@@ -8,13 +8,10 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col justify-between">
 
-    <!-- Header Section -->
     <div class="p-6">
-        <h1 id="welcome-message" class="text-2xl font-semibold text-gray-800 mb-4">Welcome, User</h1>
+        <h1 id="welcome-message" class="text-2xl font-semibold text-gray-800 mb-4">Welcome, BOSS</h1>
         <button id="logout" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full font-medium transition duration-300">Logout</button>
     </div>
-
-    <!-- Main Content Section -->
     <div class="container mx-auto p-8 flex-grow">
         <h1 class="text-4xl font-bold text-purple-800 text-center mb-8">To Do List</h1>
 
@@ -36,16 +33,16 @@
         </div>
 
         <div id="task-list" class="space-y-4 mt-4">
-            <!-- Tasks will be dynamically added here -->
+            
         </div>
     </div>
 
-    <!-- Footer Section -->
+
     <footer class="bg-white py-4 text-center shadow-inner mt-8">
         <p class="text-gray-600">&copy; <span id="year"></span> Olabisi Samuel. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript Section -->
+    
     <script src="script.js"></script>
     
     <script type="module">
@@ -56,18 +53,18 @@
                 const username = localStorage.getItem('username');
                 document.getElementById('welcome-message').textContent = `Welcome, ${username}`;
             } else {
-                window.location.href = 'login.html'; // Redirect to login if not authenticated
+                window.location.href = 'login.html'; 
             }
         });
 
         document.getElementById('logout').addEventListener('click', () => {
             signOut(auth).then(() => {
                 localStorage.removeItem('username');
-                window.location.href = 'login.html'; // Redirect to login page
+                window.location.href = 'login.html'; 
             });
         });
 
-        // Set the current year in the copyright footer
+    
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
